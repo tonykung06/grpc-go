@@ -1,7 +1,6 @@
 package main
 
 import (
-	"crypto/tls"
 	"log"
 	"path"
 	"path/filepath"
@@ -25,7 +24,15 @@ const port = ":9000"
 func main() {
 	option := flag.Int("o", 1, "Command to run")
 	flag.Parse()
-	creds := credentials.NewTLS(&tls.Config{InsecureSkipVerify: true})
+	dir, err := filepath.Abs(filepath.Dir(os.Args[0]))
+	if err != nil {
+		log.Fatal(err)
+	}
+	creds, err := credentials.NewClientTLSFromFile(path.Join(dir, "cert.pem"), "")
+	if err != nil {
+		log.Fatal(err)
+	}
+	// creds := credentials.NewTLS(&tls.Config{InsecureSkipVerify: true})
 	opts := []grpc.DialOption{grpc.WithTransportCredentials(creds)}
 	conn, err := grpc.Dial("localhost"+port, opts...)
 	if err != nil {
