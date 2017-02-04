@@ -56,7 +56,7 @@ func main() {
 
 func SendMetadata(client pb.EmployeeServiceClient) {
 	md := metadata.MD{}
-	md["user"] = []string{"mvansickle"}
+	md["user"] = []string{"tonykung"}
 	md["password"] = []string{"password1"}
 	ctx := context.Background()
 	ctx = metadata.NewContext(ctx, md)
@@ -98,7 +98,7 @@ func AddPhoto(client pb.EmployeeServiceClient) {
 		log.Fatal(err)
 	}
 	defer f.Close()
-	md := metadata.New(map[string]string{"badgenumber": "2080"})
+	md := metadata.New(map[string]string{"badgenumber": "64927"})
 	ctx := context.Background()
 	ctx = metadata.NewContext(ctx, md)
 	stream, err := client.AddPhoto(ctx)
